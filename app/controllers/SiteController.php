@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Record;
 
 class SiteController extends Controller
 {
@@ -20,7 +21,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'index'],
+                'only' => ['logout', 'index', 'dashboard', 'center-ids', 'centers-data'],
                 'rules' => [
                     [
                         'actions' => ['logout'],
@@ -31,6 +32,14 @@ class SiteController extends Controller
                         'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['@']
+                    ],
+                    [
+                        'actions' => ['dashboard', 'center-ids', 'centers-data'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function() {
+                            return Yii::$app->user->identity->isAdmin();
+                        }
                     ]
                 ],
             ],
@@ -60,7 +69,29 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect(['/record']);
+    }
+
+    /**
+     * Displays dashboard page only for admin
+     *
+     * @return string
+     */
+    public function actionDashboard() 
+    {
+        return $this->render('dashboard');
+    }
+
+    /**
+     * Gets list of IDs for election centers
+     *
+     * @return string
+     */
+    public function actionCentersData() 
+    {
+        $centersData = Record::retrieveCentersMainStatistics();
+
+        echo json_encode($centersData);
     }
 
     /**

@@ -113,3 +113,29 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+tbody > tr.pranishem-ok {
+    background-color: #22a722 !important;
+    color: #ffffff;
+}
+
+tbody > tr.pranishem-nok {
+    background-color: #e43838 !important;
+    color: #ffffff;
+}
+
+select.form-control.select-qender-id {
+    width: 150px;
+    border-radius: 0px !important;
+}
+
+div.well.text-center.indicator {
+    margin-right: 10px !important;
+    font-weight: bold;
+    display: inline-block !important;
+    margin-bottom: 0px !important;
+}
+
+span.election-center-identifier {
+    font-size: 40px;
+}

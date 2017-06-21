@@ -28,7 +28,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'APP',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -40,7 +40,8 @@ AppAsset::register($this);
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
-                '<li>'
+                (Yii::$app->user->identity->isAdmin() ? '<li><a href=\'/site/dashboard\'>Dashboard</a></li>': '')
+                .'<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
                     'Logout (' . Yii::$app->user->identity->username . ')',
@@ -54,7 +55,7 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <div class="container">
+    <div class="container" ng-app="gridApp">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
@@ -64,7 +65,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Kodek <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

@@ -37,6 +37,39 @@ class m170620_203608_add_default_users_records extends Migration
             'hashed_password' => crypt($password4, $salt4),
             'hashed_salt' => $salt4
         ]);
+
+        $password5 = "grid_application178";
+        $salt5 = crypt("$6$" . rand(0, 99999999999), "$6$" . rand(0, 99999999999));
+        $this->insert('user', [
+            'username' => 'perdoruesi5',
+            'hashed_password' => crypt($password5, $salt5),
+            'hashed_salt' => $salt5
+        ]);
+
+        $password6 = "grid_application222";
+        $salt6 = crypt("$6$" . rand(0, 99999999999), "$6$" . rand(0, 99999999999));
+        $this->insert('user', [
+            'username' => 'perdoruesi6',
+            'hashed_password' => crypt($password6, $salt6),
+            'hashed_salt' => $salt6
+        ]);
+
+        $password7 = "grid_application820";
+        $salt7 = crypt("$6$" . rand(0, 99999999999), "$6$" . rand(0, 99999999999));
+        $this->insert('user', [
+            'username' => 'perdoruesi7',
+            'hashed_password' => crypt($password7, $salt7),
+            'hashed_salt' => $salt7
+        ]);
+
+        $password8 = "admin_secret777";
+        $salt8 = crypt("$6$" . rand(0, 99999999999), "$6$" . rand(0, 99999999999));
+        $this->insert('user', [
+            'username' => 'admin@user',
+            'hashed_password' => crypt($password8, $salt8),
+            'hashed_salt' => $salt8,
+            'is_admin' => 1
+        ]);
     }
 
     public function safeDown()

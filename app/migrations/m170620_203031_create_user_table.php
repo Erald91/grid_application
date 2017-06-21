@@ -16,7 +16,8 @@ class m170620_203031_create_user_table extends Migration
             'id' => $this->primaryKey(),
             'username' => 'VARCHAR(255) NOT NULL',
             'hashed_password' => 'VARCHAR(255) NOT NULL',
-            'hashed_salt' => 'VARCHAR(255) NOT NULL'
+            'hashed_salt' => 'VARCHAR(255) NOT NULL',
+            'is_admin' => 'TINYINT(1) DEFAULT 0'
         ]);
     }
 
