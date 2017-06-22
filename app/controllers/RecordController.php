@@ -132,11 +132,28 @@ class RecordController extends Controller
      */
     public function actionUpdateState() {
         $itemId = Yii::$app->request->post('id');
+        $itemState = Yii::$app->request->post('state');
         $itemRecord = Record::findOne($itemId);
         $response = [];
 
         if($itemRecord) {
-            $itemRecord->pranishem = (int)!$itemRecord->pranishem;
+            switch((int)$itemState) {
+                case 1:
+                    $itemState = 2;
+                    break;
+                case 2:
+                    $itemState = 1;
+                    break;
+                case 0:
+                    $itemState = 3;
+                    break;
+                case 3:
+                    $itemState = 0;
+                    break;
+                default:
+                    $itemState = 0;
+            }
+            $itemRecord->pranishem = $itemState;
             if($itemRecord->save()) $response = ['success' => 'Record updated successfully'];
             else $response = ['error' => 'Record not updated', 'details' => $itemRecord->errors];
         } else {

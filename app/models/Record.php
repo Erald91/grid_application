@@ -47,7 +47,7 @@ class Record extends \yii\db\ActiveRecord
             'emertimi' => 'Emertimi',
             'date_lindja' => 'Datelindja',
             'nr_rendor' => 'Nr. Rendor',
-            'pranishem' => 'Paraqitur',
+            'pranishem' => 'State',
         ];
     }
 
@@ -83,24 +83,22 @@ class Record extends \yii\db\ActiveRecord
                              ->all();
 
         $data = array_map(function($center) {
-            # Retrieve active query from Record model
-            $activeQuery = Record::find();
-            # Define identifier 
-            $centerId = $center->qendra_id;
-            # Add WHERE clause
-            $activeQuery->where(['qendra_id' => $centerId]);
-            # Calculate total records per center
-            $total = $activeQuery->count();
-            # Calculate how many from records have successfully partecipated
-            $activeQuery->andWhere(['pranishem' => 1]);
-            $participated = $activeQuery->count();
-            # Calculate how many have not participated
-            $notParticipated = $total - $participated;
+            $query = Yii::$app->db
+            ->createCommand('
+                SELECT COUNT(*) AS count, pranishem AS state 
+                FROM record 
+                WHERE qendra_id = "' . $center->qendra_id . '"
+                GROUP BY pranishem');
+            $result = $query->queryAll();
+
+            $states = Record::_getListOfStates($result);
             return [
-                'qendra_id' => $centerId,
-                'total' => $total,
-                'participated' => $participated,
-                'notParticipated' => $notParticipated
+                'qendra_id' => $center->qendra_id,
+                'total' => $states['0'] + $states['1'] + $states['2'] + $states['3'],
+                'potential' => $states['1'],
+                'potential_done' => $states['2'],
+                'casual' => $states['0'],
+                'casual_done' => $states['3']
             ];
         }, $ids);
 
@@ -108,5 +106,25 @@ class Record extends \yii\db\ActiveRecord
             'success'=>'Data retrieved successfully', 
             'data' => $data
         ];
+    }
+
+    /**
+     * Returns list of state for specific center
+     *
+     * @param array result from database query
+     * @return array of parsed data
+     */
+    private static function _getListOfStates($result) {
+        $states = [];
+        foreach($result as $record) {
+            $states[$record['state']] = $record['count'];
+        }
+
+        if(!isset($states[0])) $states[0] = 0;
+        if(!isset($states[1])) $states[1] = 0;
+        if(!isset($states[2])) $states[2] = 0;
+        if(!isset($states[3])) $states[3] = 0;
+
+        return $states;
     }
 }

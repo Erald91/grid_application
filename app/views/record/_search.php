@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
 
     <?php echo $form->field($model, 'nr_rendor') ?>
 
-    <?php echo $form->field($model, 'pranishem')->label('Paraqitur (1 or 0)') ?>
+    <?php echo $form->field($model, 'pranishem')->label('State') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

@@ -37,24 +37,34 @@ $this->title = "Dashboard";
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="center in centerData | FilterCenters:selectedCenter">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="text-center">
                             <span class="election-center-identifier">Election Center <mark>{{center.qendra_id}}</mark></span>
                         </div>
-                        <div class="col-md-6 text-right">
+                        <div class="text-center">
                             <div class="well text-center indicator">
                                 <span style="font-size: 25px;">{{center.total}}</span>
                                 <br>
                                 TOTAL
                             </div>
                             <div class="well text-center indicator">
-                                <span style="color: green;font-size: 25px;">{{center.participated}}</span>
+                                <span style="color: #e43838;font-size: 25px;">{{center.potential}}</span>
                                 <br>
-                                Participated
+                                POTENTIAL VOTES
                             </div>
                             <div class="well text-center indicator">
-                                <span style="color: red;font-size: 25px;">{{center.notParticipated}}</span>
+                                <span style="color: #22a722;font-size: 25px;">{{center.potential_done}}</span>
                                 <br>
-                                NOT PARTICIPATED
+                                POTENTIAL VOTES (DONE)
+                            </div>
+                            <div class="well text-center indicator">
+                                <span style="color: #fd6a0a;font-size: 25px;">{{center.casual}}</span>
+                                <br>
+                                CASUAL VOTES
+                            </div>
+                            <div class="well text-center indicator">
+                                <span style="color: #0747e7;font-size: 25px;">{{center.casual_done}}</span>
+                                <br>
+                                CASUAL VOTES (DONE)
                             </div>
                         </div>
                     </div>
