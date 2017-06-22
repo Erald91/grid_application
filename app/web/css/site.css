@@ -139,3 +139,11 @@ div.well.text-center.indicator {
 span.election-center-identifier {
     font-size: 40px;
 }
+
+table > thead > tr.records-table-header-row > th {
+    text-align: center !important;
+}
+
+input[type=checkbox].toggle-checkbox {
+    transform: scale(1.3);
+}

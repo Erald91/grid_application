@@ -46,7 +46,7 @@ class Record extends \yii\db\ActiveRecord
             'qendra_id' => 'Qendra ID',
             'emertimi' => 'Emertimi',
             'date_lindja' => 'Datelindja',
-            'nr_rendor' => 'Nr Rendor',
+            'nr_rendor' => 'Nr. Rendor',
             'pranishem' => 'Paraqitur',
         ];
     }

@@ -20,6 +20,9 @@ $this->title = 'Records';
 <?php //Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,
+        'headerRowOptions' => [
+            'class' => 'text-center records-table-header-row'
+        ],
         'rowOptions' => function($model, $key, $index, $grid) {
             if($model->pranishem) {
                 return ['class' => 'text-center pranishem-ok'];
