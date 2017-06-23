@@ -166,3 +166,7 @@ ul.legend-list > li {
     display: inline-block;
     margin-right: 10px;
 }
+
+table.table.table-bordered.total-table > thead th {
+    cursor: pointer;
+}

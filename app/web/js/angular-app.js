@@ -1,3 +1,3 @@
 (function() {
-	angular.module('gridApp', []);
+	angular.module('gridApp', ["chart.js"]);
 })();

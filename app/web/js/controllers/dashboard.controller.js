@@ -19,9 +19,31 @@
 				}
 			}
 		}
+		$scope.tableHeaders = [
+			{title: 'ELECTION CENTER', field: 'qendra_id'},
+			{title: 'POTENTIAL VOTES', field: 'potential'},
+			{title: 'POTENTIAL VOTES (DONE)', field: 'potential_done'},
+			{title: 'CASUAL VOTES', field: 'casual'},
+			{title: 'CASUAL VOTES (DONE)', field: 'casual_done'},
+			{title: 'TOTAL', field: 'total'}
+		];
+		$scope.typeOfViews = ['Table', 'Billboard', 'Graphs'];
+		$scope.selectedView = 'Table';
 		$scope.centers = [];
 		$scope.selectedCenter = "All";
 		$scope.centerData = [];
+		$scope.orderField = 'total';
+		$scope.order = true;
+		$scope.colours = ['#e43838', '#22a722', '#fd6a0a', '#0747e7'];
+		$scope.labels = ["POTENTIAL VOTES", "POTENTIAL VOTES (DONE)", "CASUAL VOTES", "CASUAL VOTES (DONE)"];
+ 
+		$scope.orderTableContent = function(header) {
+			if(header.field == $scope.orderField) $scope.order = !$scope.order;
+			else {
+				$scope.orderField = header.field;
+				$scope.order = true;
+			}
+		}
 
 		$scope.retrieveListOfCenters = function(callback) {
 			$http
@@ -44,7 +66,10 @@
 			});
 			$scope.centers.unshift("All");
 
-			$scope.centerData = response.data;
+			$scope.centerData = _.map(response.data, function(center) {
+				center.pieData = [center.potential, center.potential_done, center.casual, center.casual_done];
+				return center;
+			});
 		});
 	}
 
