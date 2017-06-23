@@ -94,11 +94,11 @@ class Record extends \yii\db\ActiveRecord
             $states = Record::_getListOfStates($result);
             return [
                 'qendra_id' => $center->qendra_id,
-                'total' => $states['0'] + $states['1'] + $states['2'] + $states['3'],
-                'potential' => $states['1'],
-                'potential_done' => $states['2'],
-                'casual' => $states['0'],
-                'casual_done' => $states['3']
+                'total' => (int)$states['0'] + $states['1'] + $states['2'] + $states['3'],
+                'potential' => (int)$states['1'],
+                'potential_done' => (int)$states['2'],
+                'casual' => (int)$states['0'],
+                'casual_done' => (int)$states['3']
             ];
         }, $ids);
 
