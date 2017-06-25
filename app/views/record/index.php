@@ -74,7 +74,7 @@ $this->title = 'Records';
                 'format' => 'html',
                 'contentOptions' => ['class' => 'text-center'],
                 'content' => function($model, $key, $index, $column) {
-                    return '<input data-id="' . $model->id . '" data-state="' . $model->pranishem . '" type="checkbox" class="toggle-checkbox" ' . ($model->pranishem == 2 || $model->pranishem == 3 ? 'checked':'') . '>';
+                    return '<input data-id="' . $model->id . '" data-state="' . $model->pranishem . '" type="checkbox" class="toggle-checkbox hidden" ' . ($model->pranishem == 2 || $model->pranishem == 3 ? 'checked':'') . '>';
                 }
             ]
 

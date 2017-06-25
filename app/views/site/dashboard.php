@@ -109,7 +109,7 @@ $this->title = "Dashboard";
                         <td style="font-size: 25px;">{{center.total}}</td>
                     </tr>
                     <tr ng-if="!centerData.length">
-                        <td class="text-center" colspan="5">No data found</td>
+                        <td class="text-center" colspan="6">No data found</td>
                     </tr>
                 </tbody>
             </table>

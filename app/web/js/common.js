@@ -23,6 +23,7 @@
     function init() {
         // Manage Record state
         var $toggleCheckbox = $('[type=checkbox].toggle-checkbox');
+        $toggleCheckbox.removeClass('hidden');
         $toggleCheckbox.on('change', function(e) {
             var $_elem = $(e.target);
             var checkedFlag = $_elem.prop('checked');
