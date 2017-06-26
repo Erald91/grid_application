@@ -27,8 +27,22 @@
 			{title: 'CASUAL VOTES (DONE)', field: 'casual_done'},
 			{title: 'TOTAL', field: 'total'}
 		];
-		$scope.typeOfViews = ['Table', 'Billboard', 'Graphs'];
-		$scope.selectedView = 'Table';
+		$scope.progressTableHeaders = [
+			{title: 'ELECTION CENTER', field: 'qendra_id'},
+			{title: 'POTENTIAL VOTES (DONE)', field: 'potential_done'},
+			{title: 'CASUAL VOTES (DONE)', field: 'casual_done'},
+			{title: 'POTENTIAL + CASUAL', field: 'receivedVotes'},
+			{title: 'TOTAL', field: 'total'}
+		];
+		$scope.progressTableData = {
+			center: "All",
+			potential: 0,
+			casual: 0,
+			potentialCasual: 0,
+			total: 0
+		};
+		$scope.typeOfViews = ['Data Table', 'Billboard', 'Graphs', 'Progress Table'];
+		$scope.selectedView = 'Data Table';
 		$scope.centers = [];
 		$scope.selectedCenter = "All";
 		$scope.centerData = [];
@@ -55,6 +69,10 @@
 			})
 		}
 
+		$scope.checkView = function() {
+			if($scope.selectedView == 'Progress Table') $scope.selectedCenter = 'All';
+		}
+
 		$scope.retrieveListOfCenters(function(response, status) {
 			if(!response.success) {
 				alert('Something went wrong!');
@@ -70,7 +88,40 @@
 				center.pieData = [center.potential, center.potential_done, center.casual, center.casual_done];
 				return center;
 			});
+
+			_.each(response.data, function(center) {
+				$scope.progressTableData.potential += center.potential_done;
+				$scope.progressTableData.casual += center.casual_done;
+				$scope.progressTableData.potentialCasual += center.potential_done + center.casual_done;
+				$scope.progressTableData.total += center.total;
+			})
 		});
+
+		$scope.exportCSV = function() {
+			var downloadedData = angular.copy($scope.centerData);
+
+			downloadedData = _.map(downloadedData, function(data) {
+				return {
+					QENDRA_ID: data.qendra_id,
+					POTENTIAL_VOTES: data.potential,
+					POTENTIAL_VOTES_DONE: data.potential_done,
+					CASUAL_VOTES: data.casual,
+					CASUAL_VOTES_DONE: data.casual_done,
+					TOTAL: data.total
+				}
+			})
+
+			var csv = agnes.jsonToCsv(downloadedData);
+			var csv = "data:text/csv;charset=utf-8," + csv;
+			var encodedUri = encodeURI(csv);
+
+			var link = document.createElement("a");
+			link.setAttribute("href", encodedUri);
+			link.setAttribute("download", "statistics_" + moment().format('YYYY_MM_DD_HH_mm') + ".csv");
+			document.body.appendChild(link); // Required for FF
+
+			link.click();
+		}
 	}
 
 	function filterCenters() {

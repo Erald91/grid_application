@@ -20,7 +20,8 @@ $this->title = "Dashboard";
                     <select 
                         class="form-control select-qender-id" 
                         ng-model="selectedCenter"
-                        ng-change="calculateCenterStatistcis()">
+                        ng-change="calculateCenterStatistcis()"
+                        ng-disabled="selectedView == 'Progress Table'">
                         <option 
                             ng-repeat="center in centers" 
                             value="{{center}}">
@@ -32,13 +33,17 @@ $this->title = "Dashboard";
                     <label>Change view:</label>&nbsp;
                     <select 
                         class="form-control select-qender-id" 
-                        ng-model="selectedView">
+                        ng-model="selectedView"
+                        ng-change="checkView()">
                         <option 
                             ng-repeat="view in typeOfViews" 
                             value="{{view}}">
                             {{view}}
                         </option>
                     </select>
+                </div>
+                <div class="form-group pull-right">
+                    <a href="javascript:void(0)" ng-click="exportCSV()">Export Data Table CSV</a>
                 </div>
             </form>
         </div>
@@ -89,7 +94,7 @@ $this->title = "Dashboard";
             </ul>
         </div>
     </div>
-    <div class="row" ng-if="selectedView == 'Table'">
+    <div class="row" ng-if="selectedView == 'Data Table'">
         <div class="col-md-12">
             <table class="table table-bordered total-table">
                 <thead>
@@ -159,6 +164,31 @@ $this->title = "Dashboard";
                 <h3 class="text-center">No data found</h3>
             </div>
             <br>
+        </div>
+    </div>
+    <div class="row" ng-if="selectedView == 'Progress Table'">
+        <div class="col-md-12">
+            <table class="table table-bordered total-table">
+                <thead>
+                    <tr>
+                        <th class="text-center" ng-repeat="header in progressTableHeaders">
+                            {{header.title}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center">
+                        <td style="font-size: 25px;"><mark><strong>{{progressTableData.center}}</strong></mark></td>
+                        <td style="color: #22a722;font-size: 25px;">{{progressTableData.potential}}</td>
+                        <td style="color: #0747e7;font-size: 25px;">{{progressTableData.casual}}</td>
+                        <td style="color: #fd6a0a;font-size: 25px;">{{progressTableData.potentialCasual}}</td>
+                        <td style="font-size: 25px;">{{progressTableData.total}}</td>
+                    </tr>
+                    <tr ng-if="!centerData.length">
+                        <td class="text-center" colspan="5">No data found</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
